@@ -14,17 +14,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
 public class LoginActivity extends AppCompatActivity {
 
-    //TODO: 이 액티비티가 일단 메인으로 작동함
-    // 라디오버튼 파악해서 main액티비티나 mainad액티비티로 이동
-    // ad => admin
-
     private AlertDialog dialog;
-
-    //라디오버튼
-    RadioGroup rdGroup;
-    RadioButton mem, adm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,39 +36,13 @@ public class LoginActivity extends AppCompatActivity {
         final TextView tvPwFind = findViewById(R.id.tvPwFind);
         final TextView tvSign = findViewById(R.id.tvSign);
 
-        //라디오버튼
-        rdGroup = findViewById(R.id.rdGroup);
-        mem = findViewById(R.id.radio_mem);
-        adm = findViewById(R.id.radio_adm);
-
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String userID = etId.getText().toString();
-                final String userPasswd = etPasswd.getText().toString();
+//                final String userID = etId.getText().toString();
+//                final String userPasswd = etPasswd.getText().toString();
 
-                //TODO 로그인에서 화면 넘어가도록 설계하기 -> 원래는 아님
-                    Log.d("mytest","라디오버튼");
-                    // 선택된 라디오 버튼의 id를 가져옴
-                    int selectedId = rdGroup.getCheckedRadioButtonId();
-
-                    Intent memintent = new Intent(LoginActivity.this, MainActivity.class);
-                    Intent admintent = new Intent(LoginActivity.this, MainActivityAD.class);
-
-                    // 선택된 라디오 버튼이 없을 경우
-                    if (selectedId == -1) {
-                        Toast.makeText(LoginActivity.this, "No option selected", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // 선택된 라디오 버튼을 가져옴
-                        RadioButton selectedRadioButton = findViewById(selectedId);
-                        if (selectedRadioButton == mem) {
-                            startActivity(memintent);
-                        } else {
-                            startActivity(admintent);
-                        }
-                    }
-//
-//                    Log.d("mytest","로그인확인");
+//                   Log.d("mytest","로그인확인");
 //                    Response.Listener<String> responseListener = new Response.Listener<String>() {
 //                        @Override
 //                        public void onResponse(String response) {
@@ -103,8 +75,10 @@ public class LoginActivity extends AppCompatActivity {
 //                    LoginRequest loginRequest = new LoginRequest(userID, userPasswd, responseListener);
 //                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this.getApplicationContext());
 //                    queue.add(loginRequest);
-//                }
-            }
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
         });
 
         tvIdFind.setOnClickListener(new View.OnClickListener() {

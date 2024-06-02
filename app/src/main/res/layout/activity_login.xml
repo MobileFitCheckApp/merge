@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
-
+    tools:context=".LoginActivity">
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:src="@drawable/logo_3x" />
+        android:src="@drawable/logo_3x"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="300dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
             android:id="@+id/etId"
@@ -31,7 +37,9 @@
             android:ems="10"
             android:hint="아이디"
             android:inputType="textPersonName"
-            android:text="" />
+            android:text=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <EditText
             android:id="@+id/etPasswd"
@@ -40,14 +48,19 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="비밀번호"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPasswd">
 
             <TextView
                 android:id="@+id/tvIdFind"
@@ -83,24 +96,10 @@
             android:text="LOGIN"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvSign"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <RadioGroup
-            android:id="@+id/rdGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/radio_mem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="회원" />
-
-            <RadioButton
-                android:id="@+id/radio_adm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="트레이너" />
-        </RadioGroup>
     </LinearLayout>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

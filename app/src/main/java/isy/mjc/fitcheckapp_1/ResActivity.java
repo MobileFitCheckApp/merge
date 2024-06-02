@@ -78,12 +78,16 @@ public class ResActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.navi_attend) {
+                    Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+                    startActivity(intent);
                     return true;
                 } else if (item.getItemId() == R.id.navi_reserve) {
                     Intent intent = new Intent(getApplicationContext(), ResActivity.class);
                     startActivity(intent);
                     return true;
                 } else if (item.getItemId() == R.id.navi_mypage) {
+                    Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+                    startActivity(intent);
                     return true;
                 }
                 return false;
@@ -92,4 +96,3 @@ public class ResActivity extends AppCompatActivity {
 
     }
 }
-
