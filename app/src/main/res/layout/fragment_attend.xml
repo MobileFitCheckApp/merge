@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="50dp"
-    tools:context=".AttendFragment">
+    tools:context=".AttendActivity">
 
     <ImageView
         android:elevation="10dp"

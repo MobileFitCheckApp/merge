@@ -16,6 +16,8 @@
         <activity android:name=".MainActivityAD"></activity>
         <activity android:name=".MakeresActivity"></activity>
         <activity android:name=".ResActivity"></activity>
+        <activity android:name=".AttendActivity"></activity>
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">

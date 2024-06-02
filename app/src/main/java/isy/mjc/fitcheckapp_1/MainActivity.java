@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new AttendFragment());
                 Log.d("mytest", "출석현황");
             } else if (item.getItemId() == R.id.navi_reserve) {
-                Intent intent = new Intent(MainActivity.this, ResActivity.class);
-                startActivity(intent);
+                replaceFragment(new ReserveFragment());
                 Log.d("mytest", "예약현황");
             } else if (item.getItemId() == R.id.navi_mypage) {
                 replaceFragment(new MyPageMemberFragment());
