@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navi_class"
+        android:icon="@drawable/navi_class"
+        android:title="수업" />
+
+    <item
+        android:id="@+id/navi_manage"
+        android:icon="@drawable/navi_manage"
+        android:title="수강생관리" />
+
+    <item
+        android:id="@+id/navi_mypage_ad"
+        android:icon="@drawable/navi_mypage"
+        android:title="마이페이지" />
+</menu>

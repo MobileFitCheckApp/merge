@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/managelist"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+
+    <TextView
+        android:id="@+id/dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - "
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/managelist"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/memName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원이름"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/managelist"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintLeft_toRightOf="@+id/dash"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/memID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(아이디)"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/managelist"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintLeft_toRightOf="@+id/memName"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="20dp"
+        android:src="@drawable/delete_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
+
