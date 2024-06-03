@@ -129,6 +129,7 @@ public class ReserveFragment extends Fragment {
             builder.setPositiveButton("예", (dialog, which) -> {
                 String itemToRemove = reservations.get(position);
                 reservations.remove(position);
+                saveReservationList(reservations);
                 adapter.notifyDataSetChanged(); // 리스트뷰 갱신
                 Toast.makeText(getActivity(), itemToRemove + " 예약이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
             });
@@ -146,6 +147,15 @@ public class ReserveFragment extends Fragment {
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
         ArrayList<String> reservations = gson.fromJson(json, type);
         return reservations == null ? new ArrayList<>() : reservations;
+    }
+    // SharedPreferences에 데이터 저장
+    private void saveReservationList(ArrayList<String> reservations) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Reservations", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(reservations);
+        editor.putString("reservationList", json);
+        editor.apply();
     }
     @Override
     public void onResume() {
