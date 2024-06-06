@@ -2,11 +2,16 @@ package isy.mjc.fitcheckapp_1;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +64,30 @@ public class ManageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manage, container, false);
+        View view = inflater.inflate(R.layout.fragment_manage, container, false);
+
+        ListView listview = view.findViewById(R.id.managelist);
+        ManageListAdapter adapter = new ManageListAdapter();
+
+        adapter.addItem(new ManageListItem("김회원","ms.kim"));
+        listview.setAdapter(adapter);
+
+        AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+        View dialogView = view.inflate(getActivity(), R.layout.dialog_addmem,null);
+        //플로팅버튼 눌러서 항목 추가
+        FloatingActionButton floatingBtn = view.findViewById(R.id.floatingBtn);
+        floatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dlg.setView(dialogView);
+                dlg.setNegativeButton("취소하기",null);
+                dlg.setPositiveButton("등록하기",null);
+
+            }
+        });
+
+
+
+        return view;
     }
 }
