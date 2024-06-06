@@ -73,21 +73,19 @@ public class ManageFragment extends Fragment {
         listview.setAdapter(adapter);
 
         AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-        View dialogView = view.inflate(getActivity(), R.layout.dialog_addmem,null);
-        //플로팅버튼 눌러서 항목 추가
+        View dialogView = inflater.inflate(R.layout.dialog_addmem, container, false);
+
+        // 플로팅버튼 눌러서 항목 추가
         FloatingActionButton floatingBtn = view.findViewById(R.id.floatingBtn);
         floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dlg.setView(dialogView);
-                dlg.setNegativeButton("취소하기",null);
-                dlg.setPositiveButton("등록하기",null);
-
+                dlg.setNegativeButton("취소하기", null);
+                dlg.setPositiveButton("등록하기", null);
+                dlg.show(); // 다이얼로그 표시
             }
         });
-
-
-
         return view;
     }
 }
