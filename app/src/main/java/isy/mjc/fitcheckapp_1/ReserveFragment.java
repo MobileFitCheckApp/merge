@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,6 +85,29 @@ public class ReserveFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_reserve, container, false);
     }
 
+    public class Reservation implements Serializable {
+        private String className;
+        private String date; // yyyy-MM-dd 형식
+
+        // 생성자, getter, setter
+        public Reservation(String className, String date) {
+            this.className = className;
+            this.date = date;
+        }
+
+        public String getClassName() {
+            return className;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        @Override
+        public String toString() {
+            return className; // ArrayAdapter에 표시될 텍스트
+        }
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -107,9 +131,10 @@ public class ReserveFragment extends Fragment {
         });
 
         ListView lvResList = view.findViewById(R.id.lvResList);
-        reservations = new ArrayList<>(); 
+        reservations = new ArrayList<>();
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, reservations);
         lvResList.setAdapter(adapter);
+
 
         // Bundle에서 예약된 클래스 이름 받기
         Bundle bundle = getArguments();
