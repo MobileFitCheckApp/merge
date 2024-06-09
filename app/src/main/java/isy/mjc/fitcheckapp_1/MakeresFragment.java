@@ -38,6 +38,7 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,45 +112,42 @@ public class MakeresFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                Request.Method.GET,url,null,new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("fetchCourseList", "Response received: " + response.toString());
-                        try {
-                            List<String> classList = new ArrayList<>();
-                            List<Boolean> isReservedList = new ArrayList<>();
-                            ArrayList<String> reservedClasses = loadReservationList();
+                Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("fetchCourseList", "Response received: " + response.toString());
+                try {
+                    List<String> classList = new ArrayList<>();
+                    List<Boolean> isReservedList = new ArrayList<>();
+                    ArrayList<String> reservedClasses = loadReservationList();
 
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject course = response.getJSONObject(i);
-                                // 클래스의 날짜를 가져옵니다.
-                                String classSchedule = course.getString("class_schedule");
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject course = response.getJSONObject(i);
+                        String classSchedule = course.getString("class_schedule");
 
-                                // 선택한 날짜와 클래스의 날짜가 일치하는지 확인합니다.
-                                if (classSchedule.equals(date)) {
-                                    // 클래스 이름과 시간 정보를 결합
-                                    String className = course.getString("class_id");
-                                    String classTime = course.getString("class_time"); // 시간 정보 추출
-                                    String classInfo = className + " - " + classTime; // 이름과 시간을 결합하여 하나의 문자열로 만듦
-                                    classList.add(classInfo);
-                                    isReservedList.add(reservedClasses.contains(classInfo));
-                                }
-                            }
-                            // 수업 목록이 비어 있는지 확인
-                            if (classList.isEmpty()) {
-                                classList.add("등록된 수업 없음");
-                                isReservedList.add(false);
-                            }
-
-                            String[] classes = classList.toArray(new String[0]);
-                            Boolean[] isReservedArray = isReservedList.toArray(new Boolean[0]);
-
-                            getActivity().runOnUiThread(() -> showDialogWithDate(date, classes,isReservedArray));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (classSchedule.equals(date)) {
+                            String className = course.getString("class_id");
+                            String classTime = course.getString("class_time");
+                            String classInfo = className + " - " + classTime;
+                            classList.add(classInfo);
+                            isReservedList.add(reservedClasses.contains(classInfo));
                         }
                     }
-                },
+
+                    if (classList.isEmpty()) {
+                        classList.add("등록된 수업 없음");
+                        isReservedList.add(false);
+                    }
+
+                    String[] classes = classList.toArray(new String[0]);
+                    Boolean[] isReservedArray = isReservedList.toArray(new Boolean[0]);
+
+                    getActivity().runOnUiThread(() -> showDialogWithDate(date, classes, isReservedArray));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -187,7 +185,10 @@ public class MakeresFragment extends Fragment {
                 if (isReservedArray[which]) {
                     Toast.makeText(getActivity(), "이미 예약한 수업입니다.", Toast.LENGTH_SHORT).show();
                 } else {
-                    showReservationConfirmationDialog(classes[which]);
+                    String classInfo = classes[which];
+                    String classSchedule = null;
+                    showReservationConfirmationDialog(classInfo, classSchedule);
+
                 }
             }
         });
@@ -197,7 +198,7 @@ public class MakeresFragment extends Fragment {
         dialog.show();
     }
 
-    private void showReservationConfirmationDialog(String classInfo) {
+    private void showReservationConfirmationDialog(String classInfo,String classSchedule) {
         new AlertDialog.Builder(getActivity())
                 .setTitle("예약 확인")
                 .setMessage(classInfo + "을(를) 예약하시겠습니까?")
@@ -207,6 +208,7 @@ public class MakeresFragment extends Fragment {
                         // 예약된 클래스 정보를 Bundle을 통해 전달
                         Bundle bundle = new Bundle();
                         bundle.putString("reservedClass", classInfo);
+                        bundle.putString("classSchedule", classSchedule);
                         // ReserveFragment 인스턴스 생성 및 Bundle 전달
                         ReserveFragment reserveFragment = new ReserveFragment();
                         reserveFragment.setArguments(bundle);
@@ -236,7 +238,6 @@ public class MakeresFragment extends Fragment {
         editor.putString("reservationList", json);
         editor.apply();
     }
-
     private ArrayList<String> loadReservationList() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Reservations", Context.MODE_PRIVATE);
         Gson gson = new Gson();

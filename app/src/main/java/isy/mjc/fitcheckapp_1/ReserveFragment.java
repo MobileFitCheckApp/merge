@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -46,6 +47,7 @@ public class ReserveFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String today;
 
     public ReserveFragment() {
         // Required empty public constructor
@@ -108,6 +110,7 @@ public class ReserveFragment extends Fragment {
             return className; // ArrayAdapter에 표시될 텍스트
         }
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -115,7 +118,7 @@ public class ReserveFragment extends Fragment {
         // 현재 날짜를 가져오기
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String today = dateFormat.format(calendar.getTime());
+        today = dateFormat.format(calendar.getTime());
 
         TextView tvCurrentDate = view.findViewById(R.id.tvCurrentDate);
         tvCurrentDate.setText(today);
@@ -125,7 +128,7 @@ public class ReserveFragment extends Fragment {
         btnMakeRes.setOnClickListener(v -> {
             MakeresFragment makeresFragment = new MakeresFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout,makeresFragment)
+                    .replace(R.id.frame_layout, makeresFragment)
                     .addToBackStack(null)
                     .commit();
         });
@@ -135,17 +138,8 @@ public class ReserveFragment extends Fragment {
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, reservations);
         lvResList.setAdapter(adapter);
 
-
-        // Bundle에서 예약된 클래스 이름 받기
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String reservedClass = bundle.getString("reservedClass", "");
-
-            // 예약된 클래스가 있으면 리스트에 추가
-            ArrayList<String> loadedReservations = loadReservationList();
-            reservations.addAll(loadedReservations);
-            adapter.notifyDataSetChanged();
-        }
+        // 예약 목록을 초기화하고, Bundle에서 예약된 클래스 이름 받기
+        loadAndDisplayReservations(today);
 
         lvResList.setOnItemClickListener((parent, view1, position, id) -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -164,15 +158,34 @@ public class ReserveFragment extends Fragment {
         });
     }
 
+    private void loadAndDisplayReservations(String today) {
+    // Bundle에서 예약된 클래스 이름 받기
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String reservedClass = bundle.getString("reservedClass", "");
+            String classSchedule = bundle.getString("classSchedule", "");
+
+
+            // 예약된 클래스가 있으면 리스트에 추가
+            ArrayList<String> loadedReservations = loadReservationList();
+            reservations.clear(); // 기존 리스트를 지우고 새롭게 추가
+            if (classSchedule.equals(today)) {
+                reservations.add(reservedClass);
+            }
+            adapter.notifyDataSetChanged(); // 리스트뷰 갱신
+        }
+    }
     // SharedPreferences에서 데이터 불러오기
     private ArrayList<String> loadReservationList() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Reservations", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("reservationList", null);
-        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
         ArrayList<String> reservations = gson.fromJson(json, type);
         return reservations == null ? new ArrayList<>() : reservations;
     }
+
     // SharedPreferences에 데이터 저장
     private void saveReservationList(ArrayList<String> reservations) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Reservations", Context.MODE_PRIVATE);
@@ -182,6 +195,7 @@ public class ReserveFragment extends Fragment {
         editor.putString("reservationList", json);
         editor.apply();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -191,5 +205,4 @@ public class ReserveFragment extends Fragment {
         reservations.addAll(updatedReservations);
         adapter.notifyDataSetChanged();
     }
-
 }
