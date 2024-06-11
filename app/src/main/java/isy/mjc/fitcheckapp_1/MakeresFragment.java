@@ -59,7 +59,7 @@ public class MakeresFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private CalendarView calendarView;
-    private Set<CalendarDay> reservedDates;
+//    private Set<CalendarDay> reservedDates;
     private String selectedDate;
     private String mParam1;
     private String mParam2;

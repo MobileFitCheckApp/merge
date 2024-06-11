@@ -41,6 +41,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/logo"
                 app:layout_constraintWidth_percent="0.9" />
 
+
             <LinearLayout
                 android:id="@+id/star_bar"
                 android:layout_width="0dp"
@@ -104,6 +105,7 @@
 
 
             <ViewFlipper
+                android:visibility="invisible"
                 android:id="@+id/vf"
                 android:layout_width="350dp"
                 android:layout_height="100dp"
@@ -162,6 +164,36 @@
                         android:text="수정"
                         android:textAlignment="center" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
+                    <EditText
+                        android:id="@+id/modiEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edt_rounded_rectangle"
+                        android:gravity="top"
+                        android:hint="여기에 작성해주세요"
+                        android:imeOptions="actionGo"
+                        android:padding="10dp"
+                        app:layout_constraintHeight_default="wrap"
+                        app:layout_constraintWidth_percent="0.9" />
+
+                    <Button
+                        android:id="@+id/modiSendBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/main"
+                        android:text="등록"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
 
             </ViewFlipper>
         </androidx.constraintlayout.widget.ConstraintLayout>
