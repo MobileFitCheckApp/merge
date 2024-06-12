@@ -39,42 +39,42 @@ public class LoginActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                final String userID = etId.getText().toString();
-//                final String userPasswd = etPasswd.getText().toString();
+                final String userID = etId.getText().toString();
+                final String userPasswd = etPasswd.getText().toString();
 
-//                   Log.d("mytest","로그인확인");
-//                    Response.Listener<String> responseListener = new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            try {
-//                                JSONObject jsonResponse = new JSONObject(response);
-//                                boolean success = jsonResponse.getBoolean("success");
-//
-//                                //success키의 value에 따라 로그인 성공 / 계정 재확인 처리
-//                                if (success) {
-//                                    // 로그인 성공 처리
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//                                    builder.setMessage("로그인에 성공했습니다.")
-//                                            .setPositiveButton("확인", null)
-//                                            .create()
-//                                            .show();
-//                                } else {
-//                                    // 계정 재확인 처리
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//                                    builder.setMessage("ID 또는 비밀번호가 일치하지 않습니다. 다시 확인해 주세요.")
-//                                            .setNegativeButton("확인", null)
-//                                            .create()
-//                                            .show();
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
-//                    };
-//                    LoginRequest loginRequest = new LoginRequest(userID, userPasswd, responseListener);
-//                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this.getApplicationContext());
-//                    queue.add(loginRequest);
+                   Log.d("mytest","로그인확인");
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
+
+                                //success키의 value에 따라 로그인 성공 / 계정 재확인 처리
+                                if (success) {
+                                    // 로그인 성공 처리
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                    builder.setMessage("로그인에 성공했습니다.")
+                                            .setPositiveButton("확인", null)
+                                            .create()
+                                            .show();
+                                } else {
+                                    // 계정 재확인 처리
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                    builder.setMessage("ID 또는 비밀번호가 일치하지 않습니다. 다시 확인해 주세요.")
+                                            .setNegativeButton("확인", null)
+                                            .create()
+                                            .show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    };
+                    LoginRequest loginRequest = new LoginRequest(userID, userPasswd, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this.getApplicationContext());
+                    queue.add(loginRequest);
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

@@ -114,15 +114,14 @@ public class MyPageMemberFragment extends Fragment {
         xAxis.setValueFormatter(new IndexAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                // 여기서 value는 Entry의 인덱스입니다.
-                // Entry의 인덱스를 사용하여 해당 날짜를 가져오고, 원하는 형식으로 포맷합니다.
-                Date date = new Date(); // 여기서는 임의의 날짜를 사용하니 실제로는 Entry에 해당하는 날짜로 설정해야 합니다.
+                // 여기서 value는 Entry의 인덱스
+                // Entry의 인덱스를 사용하여 해당 날짜를 가져오고, 원하는 형식으로 포맷
+                Date date = new Date(); // 여기서는 임의의 날짜를 사용하니 실제로는 Entry에 해당하는 날짜로 설정해야.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
                 return sdf.format(date);
             }
         });
         xAxis.setLabelCount(5);
-        // 다른 설정들을 추가할 수 있습니다.
     }
 
     private void addEntry(float weight) {

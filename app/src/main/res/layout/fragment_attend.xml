@@ -198,8 +198,6 @@
                         android:textAlignment="center" />
 
                 </LinearLayout>
-
-
             </ViewFlipper>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
