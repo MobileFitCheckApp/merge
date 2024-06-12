@@ -9,29 +9,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import isy.mjc.fitcheckapp_1.databinding.ActivityMainAdmBinding;
 import isy.mjc.fitcheckapp_1.databinding.ActivityMainBinding;
 
 public class MainActivityAD extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    ActivityMainAdmBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainAdmBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new ClassFragment());
 
         binding.naviButton.setOnItemSelectedListener(item -> {
 
-            if (item.getItemId() == R.id.navi_attend) {
-                replaceFragment(new AttendFragment());
-                Log.d("mytest", "출석현황");
-            } else if (item.getItemId() == R.id.navi_reserve) {
-                replaceFragment(new ReserveFragment());
-                Log.d("mytest", "예약현황");
-            } else if (item.getItemId() == R.id.navi_mypage) {
-                replaceFragment(new MyPageMemberFragment());
+            if (item.getItemId() == R.id.navi_class) {
+                replaceFragment(new ClassFragment());
+                Log.d("mytest", "수업");
+            } else if (item.getItemId() == R.id.navi_manage) {
+                replaceFragment(new ManageFragment());
+                Log.d("mytest", "수강생관리");
+            } else if (item.getItemId() == R.id.navi_mypage_ad) {
+                replaceFragment(new MyPageAdminFragment());
                 Log.d("mytest", "마이페이지");
             }
             return true;

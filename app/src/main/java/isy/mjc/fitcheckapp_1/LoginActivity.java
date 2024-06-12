@@ -2,6 +2,7 @@ package isy.mjc.fitcheckapp_1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,46 +40,51 @@ public class LoginActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                final String userID = etId.getText().toString();
-//                final String userPasswd = etPasswd.getText().toString();
+                final String userID = etId.getText().toString();
+                final String userPasswd = etPasswd.getText().toString();
+                // ID와 비밀번호가 비어 있는지 확인
+                if (TextUtils.isEmpty(userID) || TextUtils.isEmpty(userPasswd)) {
+                    Toast.makeText(LoginActivity.this, "ID 또는 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
 
-//                   Log.d("mytest","로그인확인");
-//                    Response.Listener<String> responseListener = new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            try {
-//                                JSONObject jsonResponse = new JSONObject(response);
-//                                boolean success = jsonResponse.getBoolean("success");
-//
-//                                //success키의 value에 따라 로그인 성공 / 계정 재확인 처리
-//                                if (success) {
-//                                    // 로그인 성공 처리
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//                                    builder.setMessage("로그인에 성공했습니다.")
-//                                            .setPositiveButton("확인", null)
-//                                            .create()
-//                                            .show();
-//                                } else {
-//                                    // 계정 재확인 처리
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//                                    builder.setMessage("ID 또는 비밀번호가 일치하지 않습니다. 다시 확인해 주세요.")
-//                                            .setNegativeButton("확인", null)
-//                                            .create()
-//                                            .show();
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
-//                    };
-//                    LoginRequest loginRequest = new LoginRequest(userID, userPasswd, responseListener);
-//                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this.getApplicationContext());
-//                    queue.add(loginRequest);
+                                //success키의 value에 따라 로그인 성공 / 계정 재확인 처리
+                                if (success) {
+                                    Log.d("mytest", "로그인 성공");
+                                    // 로그인 성공 처리
+                                    Toast.makeText(LoginActivity.this, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                                    // ID에 따라 다른 액티비티로 이동
+                                    Intent intent;
+                                    if (userID.contains("admin")) {
+                                        intent = new Intent(LoginActivity.this, MainActivityAD.class);
+                                    } else {
+                                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    }
+                                    startActivity(intent);
+                                    finish(); // 현재 액티비티 종료
+                                } else {
+                                    Log.d("mytest", "로그인 실패");
+                                    // 계정 재확인 처리
+                                    Toast.makeText(LoginActivity.this, "ID 또는 비밀번호가 일치하지 않습니다. 다시 확인해 주세요.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Log.e("mytest", "예외 발생", e);
+                                e.printStackTrace();
+                            }
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivityAD.class);
-                    startActivity(intent);
+                        }
+                    };
+
+                    LoginRequest loginRequest = new LoginRequest(userID, userPasswd, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this.getApplicationContext());
+                    queue.add(loginRequest);
                 }
+            }
         });
 
         tvIdFind.setOnClickListener(new View.OnClickListener() {

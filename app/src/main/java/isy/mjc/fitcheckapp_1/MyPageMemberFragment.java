@@ -1,5 +1,6 @@
 package isy.mjc.fitcheckapp_1;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -82,6 +84,18 @@ public class MyPageMemberFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_page_member, container, false);
 
+        // 로그아웃 텍스트뷰를 찾고 클릭 이벤트를 설정합니다.
+        TextView logoutTextView = view.findViewById(R.id.logout);
+        logoutTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // LoginActivity로 이동
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
         lineChart = view.findViewById(R.id.chart);
         weightInput = view.findViewById(R.id.edt);
         addWeightButton = view.findViewById(R.id.addBtn);
@@ -114,14 +128,15 @@ public class MyPageMemberFragment extends Fragment {
         xAxis.setValueFormatter(new IndexAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                // 여기서 value는 Entry의 인덱스
-                // Entry의 인덱스를 사용하여 해당 날짜를 가져오고, 원하는 형식으로 포맷
-                Date date = new Date(); // 여기서는 임의의 날짜를 사용하니 실제로는 Entry에 해당하는 날짜로 설정해야.
+                // 여기서 value는 Entry의 인덱스입니다.
+                // Entry의 인덱스를 사용하여 해당 날짜를 가져오고, 원하는 형식으로 포맷합니다.
+                Date date = new Date(); // 여기서는 임의의 날짜를 사용하니 실제로는 Entry에 해당하는 날짜로 설정해야 합니다.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
                 return sdf.format(date);
             }
         });
         xAxis.setLabelCount(5);
+        // 다른 설정들을 추가할 수 있습니다.
     }
 
     private void addEntry(float weight) {

@@ -117,7 +117,7 @@ public class ReserveFragment extends Fragment {
 
         // 현재 날짜를 가져오기
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
         today = dateFormat.format(calendar.getTime());
 
         TextView tvCurrentDate = view.findViewById(R.id.tvCurrentDate);
@@ -139,7 +139,7 @@ public class ReserveFragment extends Fragment {
         lvResList.setAdapter(adapter);
 
         // 예약 목록을 초기화하고, Bundle에서 예약된 클래스 이름 받기
-        loadAndDisplayReservations(today);
+        loadAndDisplayReservations();
 
         lvResList.setOnItemClickListener((parent, view1, position, id) -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -158,20 +158,17 @@ public class ReserveFragment extends Fragment {
         });
     }
 
-    private void loadAndDisplayReservations(String today) {
+    private void loadAndDisplayReservations() {
     // Bundle에서 예약된 클래스 이름 받기
         Bundle bundle = getArguments();
         if (bundle != null) {
             String reservedClass = bundle.getString("reservedClass", "");
-            String classSchedule = bundle.getString("classSchedule", "");
-
 
             // 예약된 클래스가 있으면 리스트에 추가
             ArrayList<String> loadedReservations = loadReservationList();
             reservations.clear(); // 기존 리스트를 지우고 새롭게 추가
-            if (classSchedule.equals(today)) {
-                reservations.add(reservedClass);
-            }
+            reservations.add(reservedClass);
+
             adapter.notifyDataSetChanged(); // 리스트뷰 갱신
         }
     }

@@ -84,8 +84,6 @@ public class ManageFragment extends Fragment {
                 dlg.setNegativeButton("취소하기", null);
                 dlg.setPositiveButton("등록하기", null);
                 dlg.show(); // 다이얼로그 표시
-
-
             }
         });
         return view;

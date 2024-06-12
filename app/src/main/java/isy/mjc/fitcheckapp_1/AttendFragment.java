@@ -81,9 +81,8 @@ public class AttendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // fragment에 view 인플레이트 하기
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attend, container, false);
-        // 각각의 요소들 인플레이트 하기
         calView = view.findViewById(R.id.attend_calendar);
         dateText = view.findViewById(R.id.dateText);
         viewText = view.findViewById(R.id.viewText);
@@ -97,10 +96,8 @@ public class AttendFragment extends Fragment {
         modiEdt = view.findViewById(R.id.modiEdt);
         modiSendBtn = view.findViewById(R.id.modiSendBtn);
 
-        //뷰 플리퍼는 처음엔 안보이게함 -> 보이게 되면 해당 날짜에 작성하지 않은 text뷰 내용 노출
         vf.setVisibility(View.INVISIBLE);
 
-        //별점은 선택되면 일단 바로 보임, 선택 값은 전역변수에 저장해서 다른 메소드에서 언제든지 접근 가능함
         starRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -114,10 +111,10 @@ public class AttendFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // 현재 날짜를 TextView에 설정, 날짜 형식 yyyy-mm-dd로 설정
+        // 현재 날짜를 TextView에 설정
         dateText.setText(String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth));
 
-        // 캘린더뷰 이벤트 처리 -> 선택한 날짜에 저장된 운동일지 내역있는지 확인하는 request진행
+        // 캘린더뷰 이벤트 처리
         calView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -132,20 +129,16 @@ public class AttendFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            //jsp에서 담아서 넘겨주는 jsonobject
                             JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");//<- jsp에서 값의 유무 확인용으로 전단하는 매개변수
+                            boolean success = jsonResponse.getBoolean("success");
 
-                            if (success) {//<- boolean으로 t/f의 값을 전달한다.
+                            if (success) {
                                 vf.setDisplayedChild(1);
                                 String content = jsonResponse.getString("tvText");
-                                //double로 온값을 float로 형변환
                                 float stars = (float) jsonResponse.getDouble("star");
-                                //가져온 내용과 값을 화면에 보여준다.
                                 viewText.setText(content);
                                 starRate.setRating(stars);
                             } else {
-                                //값이 없어서 edittext가 있는 첫번쨰 vf를 띄워줌
                                 vf.setDisplayedChild(0);
                                 starRate.setRating(0);
                             }
@@ -154,7 +147,6 @@ public class AttendFragment extends Fragment {
                         }
                     }
                 };
-                //date로 컬럼 select하려고 해당하는 하나의 값만 request 요청함
                 AttendCheckRequest ACRequest = new AttendCheckRequest(date, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(getContext());
                 queue.add(ACRequest);
@@ -179,12 +171,10 @@ public class AttendFragment extends Fragment {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
-                                //date column에 데이터 insert가 완료되었다면
-                                //textview가 있는 vf 보이고 값을 사용자가 등록한 값 보이게하기 -> 굳이 서버에서 보낸값 쓰지 않아도 됨 자원낭비
-                                vf.setDisplayedChild(1); //
+                                vf.setDisplayedChild(1);
                                 viewText.setText(content);
                                 starRate.setRating(stars);
-                                Log.d("tag", "등록 response 확인");
+                                Log.d("tag", "저장되나");
                             } else {
                                 // 등록 실패 시 처리
                                 Log.d("VolleyResponse", "Registration failed");
@@ -195,7 +185,6 @@ public class AttendFragment extends Fragment {
                         }
                     }
                 };
-                //Stringrequest를 쓰고있기 때문에 자바와 서버연결할때는 string으로 형변환이 필요하다.
                 String star = Float.toString(stars);
                 AttendSendRequest ASRequest = new AttendSendRequest(date, star, content, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -209,13 +198,10 @@ public class AttendFragment extends Fragment {
             public void onClick(View v) {
                 vf.setDisplayedChild(2);
                 modiEdt.setText(viewText.getText().toString());
-                Log.d("mytest", "제대로 수정 edt으로 넘어가야함");
+                Log.d("mytest", "제대로 수정 tv로 넘어가나");
             }
         });
 
-        //수정등록버튼을 이미 있는 등록 버튼과 같은 모양인데 하나 더 만든이유: 그냥 등록버튼에 수정 동작을 또 이용할 경우
-        // 등록이 되었었다는 확인 절차가 필요함 -> 서버 연결이 또 필요함 -> 서버 연결을 위한 서버 연결이라 복잡하다고 생각되어서
-        // 버튼과 이벤트 처리 자체를 이미 존재하는 등록버튼과 분리해서 하기로 결정했음
         modiSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

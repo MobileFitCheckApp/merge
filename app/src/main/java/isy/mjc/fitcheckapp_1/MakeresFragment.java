@@ -128,7 +128,7 @@ public class MakeresFragment extends Fragment {
                         if (classSchedule.equals(date)) {
                             String className = course.getString("class_id");
                             String classTime = course.getString("class_time");
-                            String classInfo = className + " - " + classTime;
+                            String classInfo = classSchedule + " - " + className + " - " + classTime;
                             classList.add(classInfo);
                             isReservedList.add(reservedClasses.contains(classInfo));
                         }
@@ -179,6 +179,8 @@ public class MakeresFragment extends Fragment {
             }
         };
 
+
+
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -208,7 +210,6 @@ public class MakeresFragment extends Fragment {
                         // 예약된 클래스 정보를 Bundle을 통해 전달
                         Bundle bundle = new Bundle();
                         bundle.putString("reservedClass", classInfo);
-                        bundle.putString("classSchedule", classSchedule);
                         // ReserveFragment 인스턴스 생성 및 Bundle 전달
                         ReserveFragment reserveFragment = new ReserveFragment();
                         reserveFragment.setArguments(bundle);
@@ -228,7 +229,7 @@ public class MakeresFragment extends Fragment {
                 .show();
     }
 
-    private void saveReservationToSharedPrefs(String reservedClass) {
+    private void saveReservationToSharedPrefs(String reservedClass ) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Reservations", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
