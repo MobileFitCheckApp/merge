@@ -62,8 +62,10 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent;
                                     if (userID.contains("admin")) {
                                         intent = new Intent(LoginActivity.this, MainActivityAD.class);
+                                        intent.putExtra("USER_ID", userID);
                                     } else {
                                         intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.putExtra("USER_ID", userID);
                                     }
                                     startActivity(intent);
                                     finish(); // 현재 액티비티 종료

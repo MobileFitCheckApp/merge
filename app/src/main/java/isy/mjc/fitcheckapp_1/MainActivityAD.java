@@ -22,6 +22,7 @@ public class MainActivityAD extends AppCompatActivity {
         binding = ActivityMainAdmBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new ClassFragment());
+        String userId = getIntent().getStringExtra("USER_ID");
 
         binding.naviButton.setOnItemSelectedListener(item -> {
 
@@ -29,7 +30,7 @@ public class MainActivityAD extends AppCompatActivity {
                 replaceFragment(new ClassFragment());
                 Log.d("mytest", "수업");
             } else if (item.getItemId() == R.id.navi_manage) {
-                replaceFragment(new ManageFragment());
+                replaceFragment(ManageFragment.newInstance(userId));
                 Log.d("mytest", "수강생관리");
             } else if (item.getItemId() == R.id.navi_mypage_ad) {
                 replaceFragment(new MyPageAdminFragment());
