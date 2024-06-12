@@ -35,7 +35,7 @@ public class ManageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String uesrID;
+    String uesrID;
 
     public ManageFragment() {
         // Required empty public constructor
@@ -79,8 +79,10 @@ public class ManageFragment extends Fragment {
         ListView listview = view.findViewById(R.id.managelist);
         ManageListAdapter adapter = new ManageListAdapter();
 
-       // adapter.addItem(new ManageListItem("김회원","ms.kim"));
-       // listview.setAdapter(adapter);
+        Log.d("dd","유저 아이디"+uesrID);
+        //아이디는 넘겨받았지만 ,,, 코드가 아니라 미쓰..
+        adapter.addItem(new ManageListItem("김회원","ms.kim"));
+        listview.setAdapter(adapter);
 
         AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
         View dialogView = inflater.inflate(R.layout.dialog_addmem, container, false);

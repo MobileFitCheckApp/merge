@@ -44,8 +44,6 @@ public class ManageListAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item_manage_member, parent, false);
         }
-
-
         //화면에 보여질 데이터를 참조합니다.
         TextView memName = convertView.findViewById(R.id.memName);
         TextView memID = convertView.findViewById(R.id.memID);
@@ -58,14 +56,11 @@ public class ManageListAdapter extends BaseAdapter {
                 notifyDataSetChanged(); // 어댑터에 변경을 알림
             }
         });
-
         //데이터를 set해줍니다.
         memName.setText(listItem.getMemName());
         memID.setText(listItem.getMemID());
-
         return convertView;
     }
-
     public void addItem(ManageListItem item) {
         items.add(item);
     }
