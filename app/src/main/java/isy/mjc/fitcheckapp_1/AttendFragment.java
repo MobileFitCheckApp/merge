@@ -46,7 +46,7 @@ public class AttendFragment extends Fragment {
     String date, content;
 
     // 현재 날짜를 가져오기 위한 Calendar 객체 생성 하기
-    //push 하기ds
+    //push 하기dsd
     Calendar calendar = Calendar.getInstance();
 
     private static final String ARG_PARAM1 = "param1";
